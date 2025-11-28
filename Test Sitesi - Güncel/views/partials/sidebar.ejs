@@ -1,0 +1,76 @@
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <span class="material-icons-round logo-icon">dns</span>
+        <h2>Arıza Takip</h2>
+    </div>
+
+    <nav class="sidebar-nav">
+        <button class="menu-btn active" onclick="showPanel('home', this)">
+            <span class="material-icons-round">home</span>
+            <span>Anasayfa</span>
+        </button>
+
+        <% if (['kullanici', 'operator' , 'admin' ].includes(user.rol)) { %>
+            <button class="menu-btn" onclick="showPanel('create', this)">
+                <span class="material-icons-round">add_circle</span>
+                <span>Arıza Bildir</span>
+            </button>
+            <button class="menu-btn" onclick="showPanel('my-tickets', this)">
+                <span class="material-icons-round">history</span>
+                <span>Taleplerim</span>
+            </button>
+            <% } %>
+
+        <% if (['operator', 'admin' ].includes(user.rol)) { %>
+        <div class="separator">YÖNETİM</div>
+            <button class="menu-btn" onclick="showPanel('admin', this)">
+                    <span class="material-icons-round">admin_panel_settings</span>
+                    <span>Gelen Arızalar</span>
+            </button>
+
+            <button class="menu-btn" onclick="showPanel('stock-management', this)">
+                <span class="material-icons-round">inventory_2</span>
+                <span>Stok/Zimmet</span>
+            </button>
+        <% } %>
+
+        <% if (['teknisyen', 'admin' ].includes(user.rol)) { %>
+            <button class="menu-btn" onclick="showPanel('tech-tasks', this)">
+                <span class="material-icons-round">assignment</span>
+                    <span><%= user.rol==='admin' ? 'Saha İşleri' : 'İş Listesi' %></span>
+            </button>
+
+            <button class="menu-btn" onclick="showPanel('quick-work', this)">
+                <span class="material-icons-round">playlist_add_check</span>
+                <span>Hızlı İş Girişi</span>
+            </button>
+        <% } %>
+
+        <% if (user.rol==='admin' ) { %>
+            <div class="separator">SİSTEM</div>
+                <button class="menu-btn" onclick="showPanel('user-management', this)">
+                    <span class="material-icons-round">people</span>
+                    <span>Kullanıcılar</span>
+                </button>
+            <% } %>
+    </nav>
+
+    <div class="user-profile">
+        <div class="avatar">
+            <%= user.ad.charAt(0).toUpperCase() %>
+                <%= user.soyad.charAt(0).toUpperCase() %>
+        </div>
+        <div class="user-info">
+            <p class="name">
+                <%= user.ad %>
+                    <%= user.soyad %>
+            </p>
+            <p class="role">
+                <%= user.rol.toUpperCase() %>
+            </p>
+        </div>
+        <a href="/logout" class="logout-btn" title="Çıkış Yap">
+            <span class="material-icons-round">logout</span>
+        </a>
+    </div>
+</aside>

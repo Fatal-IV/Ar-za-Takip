@@ -1,0 +1,121 @@
+<div id="quick-work" class="panel-section">
+    <header class="top-bar">
+        <h1>Saha Çalışması Ekle (Hızlı Giriş)</h1>
+    </header>
+
+    <div class="card">
+        <div style="background: rgba(138, 180, 248, 0.1); border: 1px solid rgba(138, 180, 248, 0.3); padding: 15px; border-radius: 8px; margin-bottom: 25px; color: var(--primary-text, #e8eaed); font-size: 0.9rem;">
+            <div style="display:flex; gap:10px;">
+                <span class="material-icons-round" style="color: #8ab4f8;">flash_on</span>
+                <span>Bu form, <strong>sahada anlık çözdüğünüz</strong> işleri sisteme kaydetmek içindir. Kayıt direkt "Çözüldü" olarak işlenecektir.</span>
+            </div>
+        </div>
+
+        <form action="/create-resolved-ticket" method="POST">
+            
+            <div style="margin-bottom: 20px;">
+                <h4 style="margin:0 0 15px 0; font-size:1rem; color:var(--text-sub, #9aa0a6); border-bottom:1px solid #3c4043; padding-bottom:5px;">Hizmet Verilen Personel</h4>
+                
+                <div class="form-grid-3">
+                    <div class="input-group dark-theme">
+                        <input type="text" name="manuel_ad" required placeholder=" ">
+                        <label>Personel Adı Soyadı</label>
+                    </div>
+
+                    <div class="input-group dark-theme">
+                        <select id="quick_kat" name="kat" required class="styled-select">
+                            <option value="" disabled selected></option>
+                            </select>
+                        <label>Bulunduğu Kat</label>
+                    </div>
+
+                    <div class="input-group dark-theme">
+                        <select id="quick_birim" name="birim" required disabled class="styled-select">
+                            <option value="" disabled selected>Önce Kat Seçiniz</option>
+                        </select>
+                        <label>Birim / Mahkeme</label>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 style="margin:0 0 15px 0; font-size:1rem; color:var(--text-sub, #9aa0a6); border-bottom:1px solid #3c4043; padding-bottom:5px;">Yapılan İşlem</h4>
+                
+                <div class="form-grid-2">
+                    <div class="input-group dark-theme">
+                        <input type="text" name="baslik" required placeholder=" ">
+                        <label>İşlem Başlığı (Örn: Toner Değişimi)</label>
+                    </div>
+                    <div class="input-group dark-theme">
+                        <input type="text" name="detay" required placeholder=" ">
+                        <label>Detaylar</label>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-top: 25px;">
+                <button type="submit" class="btn-action primary-btn">
+                    <span class="material-icons-round">save_as</span>
+                    Kaydet ve Tamamla
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Kat ve Birim Mantığı (Register sayfasından uyarlandı)
+    document.addEventListener("DOMContentLoaded", () => {
+        const quickKat = document.getElementById('quick_kat');
+        const quickBirim = document.getElementById('quick_birim');
+
+        // Veri Seti (Register sayfasındaki ile aynı)
+        const katBirimData = {
+            "1": ["24. İdare Mahkemesi", "25. İdare Mahkemesi"],
+            "2": ["21. İdare Mahkemesi", "22. İdare Mahkemesi"],
+            "3": ["19. İdare Mahkemesi", "20. İdare Mahkemesi"],
+            "4": ["17. İdare Mahkemesi", "18. İdare Mahkemesi"],
+            "5": ["15. İdare Mahkemesi", "16. İdare Mahkemesi"],
+            "6": ["13. İdare Mahkemesi", "14. İdare Mahkemesi"],
+            "7": ["11. İdare Mahkemesi", "12. İdare Mahkemesi"],
+            "8": ["9. İdare Mahkemesi", "10. İdare Mahkemesi"],
+            "9": ["7. İdare Mahkemesi", "8. İdare Mahkemesi"],
+            "10": ["5. İdare Mahkemesi", "6. İdare Mahkemesi"],
+            "11": ["3. İdare Mahkemesi", "4. İdare Mahkemesi"],
+            "12": ["1. İdare Mahkemesi", "2. İdare Mahkemesi"],
+            "13": ["27. İdare Mahkemesi", "23. İdare Mahkemesi"],
+            "14": ["26. İdare Mahkemesi", "5. Vergi Dava Dairesi"],
+            "15": ["15. İdari Dava Dairesi"],
+            "16": ["14. İdari Dava Dairesi"],
+            "17": ["Başkanlık", "Medya/İletişim", "İdari İşler - Adalet Komisyon"]
+        };
+
+        if(quickKat && quickBirim) {
+            // Katları Doldur
+            Object.keys(katBirimData).forEach(kat => {
+                const opt = document.createElement('option');
+                opt.value = kat;
+                opt.textContent = `${kat}. Kat`;
+                quickKat.appendChild(opt);
+            });
+
+            // Değişim Dinleyicisi
+            quickKat.addEventListener('change', function() {
+                const secilen = this.value;
+                quickBirim.innerHTML = '<option value="" disabled selected>Birim Seçiniz</option>';
+                
+                if(secilen && katBirimData[secilen]) {
+                    quickBirim.disabled = false;
+                    katBirimData[secilen].forEach(birim => {
+                        const opt = document.createElement('option');
+                        opt.value = birim;
+                        opt.textContent = birim;
+                        quickBirim.appendChild(opt);
+                    });
+                } else {
+                    quickBirim.disabled = true;
+                }
+            });
+        }
+    });
+</script>

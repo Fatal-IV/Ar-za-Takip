@@ -1,0 +1,215 @@
+/* public/css/dashboard.css */
+
+:root {
+    /* Renk Paleti - Dark Mode */
+    --sidebar-bg: #1e1f20;
+    --main-bg: #121212;
+    --card-bg: #1e1f20;
+    --active-item: #323336;
+    --primary: #8ab4f8;      /* Google Blue (Pastel) */
+    --text-main: #e8eaed;    /* Kırık Beyaz */
+    --text-sub: #9aa0a6;     /* Gri */
+    --border: #3c4043;       /* Koyu Gri Çerçeve */
+    
+    /* Durum Renkleri */
+    --danger: #f28b82;       /* Beklemede */
+    --warning: #fdd663;      /* Atandı */
+    --success: #81c995;      /* Çözüldü */
+}
+
+body {
+    display: flex;
+    overflow: hidden;
+    height: 100vh;
+    background-color: var(--main-bg);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    color: var(--text-main);
+}
+
+/* --- SCROLLBAR TASARIMI (Modern & İnce) --- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--main-bg); 
+}
+::-webkit-scrollbar-thumb {
+    background: #3c4043; 
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #5f6368; 
+}
+
+/* --- ANA İÇERİK ALANI --- */
+.main-content {
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;       /* İçerik taşarsa kaydır */
+    scroll-behavior: smooth; /* Akıcı kaydırma */
+    position: relative;
+}
+
+.top-bar { margin-bottom: 32px; }
+.top-bar h1 { font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin: 0; }
+
+/* --- PANEL GEÇİŞ ANİMASYONU (Slide Up) --- */
+.panel-section {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px); /* İçerik 20px aşağıdan gelir */
+    transition: opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.panel-section.active {
+    display: block;
+    animation: slideUpFade 0.4s forwards; 
+}
+
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- KART TASARIMLARI --- */
+.card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.welcome-card {
+    background: linear-gradient(135deg, #1f2533 0%, #1e1f20 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.welcome-text h2 { margin: 0 0 8px 0; color: var(--primary); }
+.welcome-text p { color: var(--text-sub); margin: 0; }
+
+/* --- FORMLAR (Floating Label) --- */
+.input-group { 
+    position: relative; 
+    margin-bottom: 24px; }
+
+.input-group input, .input-group textarea {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--text-sub);
+    padding: 16px;
+    color: var(--text-main);
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.2s;
+}
+
+.input-group label {
+    position: absolute;
+    left: 12px; top: 16px;
+    padding: 0 4px;
+    background: var(--card-bg); /* Çizgiyi kesmesi için */
+    color: var(--text-sub);
+    transition: 0.2s;
+    pointer-events: none;
+}
+
+.input-group input:focus, .input-group textarea:focus { 
+    border-color: var(--primary); 
+    border-width: 2px; 
+    padding: 15px; /* Border kalınlaştığı için padding kıstık */
+}
+
+.input-group input:focus ~ label, .input-group input:not(:placeholder-shown) ~ label,
+.input-group textarea:focus ~ label, .input-group textarea:not(:placeholder-shown) ~ label {
+    top: -10px; 
+    font-size: 0.8rem; 
+    color: var(--primary); 
+    font-weight: 600;
+}
+
+.btn-action {
+    background: var(--primary);
+    color: #202124;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 100%;
+}
+.btn-action:hover { background: #aecbfa; }
+
+/* --- GENEL TABLO STİLLERİ (Basit Tablolar İçin) --- */
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+}
+th { 
+    text-align: left; 
+    color: var(--text-sub); 
+    padding: 16px; 
+    border-bottom: 1px solid var(--border); 
+    font-weight: 500; 
+    font-size: 0.85rem; 
+}
+td { 
+    padding: 16px; 
+    border-bottom: 1px solid #2d2e30; 
+    vertical-align: top; 
+    color: var(--text-main); 
+}
+tr:last-child td { 
+    border-bottom: none; 
+}
+.table-title { 
+    font-weight: 600; 
+    font-size: 0.95rem; 
+    margin-bottom: 4px; 
+}
+.table-subtitle { 
+    font-size: 0.85rem; 
+    color: var(--text-sub); 
+}
+
+/* Durum Badges */
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.05);
+    display: inline-block;
+}
+.status-beklemede { 
+    color: var(--danger); 
+    border: 1px solid var(--danger); 
+}
+.status-atandi { 
+    color: var(--warning); 
+    border: 1px solid var(--warning); 
+}
+.status-cozuldu { 
+    color: var(--success); 
+    border: 1px solid var(--success); 
+}

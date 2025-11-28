@@ -1,0 +1,2 @@
+Sistem 3000 portunda çalışıyor.
+^C

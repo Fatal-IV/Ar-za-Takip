@@ -1,0 +1,44 @@
+[
+  {
+    "id": "json_1764253132275",
+    "source": "json",
+    "teknisyen_id": 1,
+    "tech_ad": "Umut ilyas",
+    "tech_soyad": "Köz",
+    "talep_eden_ad": "1",
+    "hizmet_kati": "1",
+    "hizmet_birimi": "24. İdare Mahkemesi",
+    "sorun_basligi": "1",
+    "detay": "1",
+    "durum": "cozuldu",
+    "tarih": "2025-11-27T14:18:52.275Z"
+  },
+  {
+    "id": "json_1764339194636",
+    "source": "json",
+    "teknisyen_id": 73,
+    "tech_ad": "Ahmet",
+    "tech_soyad": "Koç",
+    "talep_eden_ad": "Umut İlyas Köz",
+    "hizmet_kati": "1",
+    "hizmet_birimi": "24. İdare Mahkemesi",
+    "sorun_basligi": "123",
+    "detay": "123",
+    "durum": "cozuldu",
+    "tarih": "2025-11-28T14:13:14.636Z"
+  },
+  {
+    "id": "json_1764339326144",
+    "source": "json",
+    "teknisyen_id": 73,
+    "tech_ad": "Ahmet",
+    "tech_soyad": "Koç",
+    "talep_eden_ad": "Umut İlyas Köz",
+    "hizmet_kati": "1",
+    "hizmet_birimi": "24. İdare Mahkemesi",
+    "sorun_basligi": "Toner Değişti",
+    "detay": "1. Kat 24. İdare Toner Değişti",
+    "durum": "cozuldu",
+    "tarih": "2025-11-28T14:15:26.144Z"
+  }
+]
