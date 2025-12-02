@@ -1,0 +1,126 @@
+/* public/css/sidebar.css */
+
+/* --- SIDEBAR YAPISI --- */
+.sidebar {
+    width: 280px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    flex-shrink: 0;
+    /* Renk değişkenleri dashboard.css veya main.css'den gelir */
+}
+
+/* Header & Logo */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    padding-left: 12px;
+}
+
+.sidebar-header h2 {
+    font-size: 1.25rem;
+    color: var(--text-main);
+    margin: 0;
+    font-weight: 600;
+}
+
+.logo-icon {
+    color: var(--primary);
+    font-size: 28px;
+}
+
+/* Navigasyon */
+.sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.separator {
+    font-size: 0.75rem;
+    color: var(--text-sub);
+    margin: 20px 0 10px 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Menü Butonları */
+.menu-btn {
+    background: transparent;
+    color: var(--text-sub);
+    padding: 12px 16px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.menu-btn:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-main);
+}
+
+.menu-btn.active {
+    background: #3a4a63;
+    color: var(--primary);
+}
+
+.menu-btn .material-icons-round {
+    font-size: 22px;
+}
+
+/* Profil Alanı */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 12px;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: var(--primary);
+    color: #121212;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-info .name { margin: 0; font-size: 0.9rem; color: var(--text-main); font-weight: 600; }
+.user-info .role { margin: 0; font-size: 0.8rem; color: var(--text-sub); }
+
+.logout-btn {
+    color: var(--danger);
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 50%;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-btn:hover { background: rgba(242, 139, 130, 0.1); }

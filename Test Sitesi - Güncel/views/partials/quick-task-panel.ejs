@@ -1,0 +1,74 @@
+<div id="quick-task-panel" class="panel-section">
+    <header class="top-bar">
+        <h1>Hızlı İş Kaydı (Çözülenler)</h1>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-top: 20px;">
+        
+        <div class="card" style="padding:0; overflow:hidden; display:flex; flex-direction:column; height: 600px;">
+            <div class="card-header" style="padding:15px 20px; border-bottom:1px solid var(--border); background:rgba(255,255,255,0.02); display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="material-icons-round" style="color:var(--success);">done_all</span>
+                    <h3 style="font-size:1rem; margin:0;">Tamamlanan İşler</h3>
+                </div>
+                
+                <div id="techFilterWrapper" style="display:none;">
+                    <select id="techFilterSelect" onchange="filterQuickTasks()" 
+                        style="background:var(--bg-main); border:1px solid var(--border); padding:6px 10px; border-radius:6px; color:var(--text-main); font-size:0.85rem; outline:none;">
+                        <option value="all">Tüm Teknisyenler</option>
+                        </select>
+                </div>
+            </div>
+            
+            <div style="overflow-y:auto; flex:1;">
+                <table class="operator-table" id="quickTaskTable">
+                    <thead>
+                        <tr>
+                            <th style="padding-left:20px;">Tarih</th>
+                            <th>Teknisyen</th>
+                            <th>Yapılan İş / Yer</th>
+                            <th>Detay</th>
+                            <th style="text-align:center;">İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card" style="border-top: 4px solid var(--accent-blue); padding: 20px;">
+            <h3 style="margin: 0 0 15px 0; font-size: 1.1rem; display: flex; align-items: center; gap: 10px;">
+                <span class="material-icons-round" style="color:var(--accent-blue);">add_task</span>
+                Yapılan İşi Kaydet
+            </h3>
+            <p style="font-size:0.8rem; color:var(--text-sub); margin-bottom:15px;">
+                Buraya girdiğiniz kayıtlar doğrudan "Çözüldü" olarak işlenir ve ana havuza düşmez.
+            </p>
+            
+            <form action="/quick-task/add" method="POST">
+                
+                <div class="input-group dark-theme" style="margin-bottom:15px;">
+                    <input type="text" name="yapilan_yer" required placeholder=" ">
+                    <label>Yer / Kişi / Birim</label>
+                </div>
+
+                <div class="input-group dark-theme" style="margin-bottom:15px;">
+                    <input type="text" name="baslik" required placeholder=" ">
+                    <label>İşin Özeti (Örn: Toner Değişimi)</label>
+                </div>
+
+                <div class="input-group dark-theme" style="margin-bottom:20px;">
+                    <textarea name="aciklama" rows="4" required placeholder=" " style="resize:none;"></textarea>
+                    <label>Yapılan İşlem Detayı</label>
+                </div>
+
+                <button type="submit" class="btn-action primary-btn" style="width:100%; justify-content:center;">
+                    <span class="material-icons-round">save</span>
+                    Kaydet ve Bitir
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>

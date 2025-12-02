@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <script src="/js/form-validation.js"></script>
+</body>
+</html>
+</head>
+<body class="auth-body">
+
+    <div class="auth-container wide">
+        <div class="auth-header">
+            <h2>Hesabınızı Oluşturun</h2>
+            <p>(Arıza Takip Sistemi Kaydı)</p>
+        </div>
+
+        <form action="/register" method="POST">
+            
+            <div class="form-grid">
+                <div class="material-group">
+                    <input type="text" name="ad" required placeholder=" ">
+                    <label>Ad</label>
+                </div>
+                <div class="material-group">
+                    <input type="text" name="soyad" required placeholder=" ">
+                    <label>Soyad</label>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="material-group">
+                    <input type="text" name="sicil" required placeholder=" ">
+                    <label>Sicil No</label>
+                </div>
+                <div class="material-group">
+                    <input type="tel" name="telefon" required placeholder=" ">
+                    <label>Telefon</label>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="material-group">
+                    <select id="katSelect" name="kat" required class="has-content">
+                        <option value="" disabled selected>Seçiniz</option>
+                        </select>
+                    <label>Kat Bilgisi</label>
+                </div>
+
+                <div class="material-group">
+                    <select id="birimSelect" name="birim" required disabled class="has-content">
+                        <option value="" disabled selected>Önce Kat Seçiniz</option>
+                        </select>
+                    <label>Birim</label>
+                </div>
+            </div>
+            <div class="material-group" style="margin-top: 10px;">
+                <input type="password" name="sifre" required placeholder=" " minlength="6">
+                <label>Şifre</label>
+                <small style="display:block; text-align:left; color:#5f6368; font-size:12px; margin-top:5px;">
+                    8 veya daha fazla harf, rakam ve sembol kullanın
+                </small>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:30px;">
+                <a href="/" style="color:#1a73e8; text-decoration:none; font-weight:500; font-size:14px;">Bunun yerine oturum aç</a>
+                <button type="submit" class="btn-google" style="width:auto; margin:0;">Kaydı Tamamla</button>
+            </div>
+        </form>
+    </div>
+<script src="/js/form-validation.js"></script> <script src="/js/register-logic.js"></script>
+<div id="material-snackbar" class="snackbar">
+    <span id="snackbar-message">Mesaj buraya gelecek</span>
+</div>
+
+<style>
+    /* Bildirim Çubuğu Tasarımı */
+    .snackbar {
+        visibility: hidden;
+        
+        /* GENİŞLİK: Oldukça geniş ve ferah */
+        min-width: 600px;
+        max-width: 90%;
+        
+        /* KONUM: Sayfanın en tepesinde asılı kalsın */
+        position: fixed;
+        z-index: 10000; /* Her şeyin üstünde */
+        left: 50%;
+        top: 24px; /* Tavandan biraz boşluk */
+        
+        /* Başlangıçta görünmez (Yukarıda saklı) */
+        transform: translate(-50%, -150%); 
+        
+        /* GÖRÜNÜM: Koyu, sade, gölgeli */
+        background-color: #323232;
+        color: #f1f1f1;
+        font-family: 'Roboto', 'Segoe UI', sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        
+        /* İÇ YAPI */
+        padding: 16px 24px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Yazıyı ortala */
+        text-align: center;
+        
+        /* Derinlik Gölgesi */
+        box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        
+        /* Animasyon */
+        opacity: 0;
+        transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s;
+    }
+
+    /* Hata durumunda altına ince kırmızı çizgi */
+    .snackbar.error {
+        border-bottom: 3px solid #f28b82;
+    }
+
+    /* GÖRÜNÜR OLMA */
+    .snackbar.show {
+        visibility: visible;
+        opacity: 1;
+        /* Aşağı inip yerine oturma */
+        transform: translate(-50%, 0); 
+    }
+</style>
+
+<script>
+    function showSnackbar(message, type = 'info') {
+        const snackbar = document.getElementById("material-snackbar");
+        const msgSpan = document.getElementById("snackbar-message");
+        
+        msgSpan.textContent = message;
+        
+        if(type === 'error') {
+            snackbar.classList.add('error');
+        } else {
+            snackbar.classList.remove('error');
+        }
+
+        snackbar.classList.add("show");
+
+        // 4.5 saniye sonra otomatik kaybol
+        setTimeout(function(){ 
+            closeSnackbar();
+        }, 4500);
+    }
+
+    function closeSnackbar() {
+        const snackbar = document.getElementById("material-snackbar");
+        snackbar.classList.remove("show");
+    }
+
+    <% if (typeof toast !== 'undefined' && toast) { %>
+        setTimeout(() => {
+            showSnackbar("<%= toast.message %>", "<%= toast.type %>");
+        }, 400); // Sayfa yüklenince hafif bir gecikmeyle insin
+    <% } %>
+</script>
+</body>
+</html>

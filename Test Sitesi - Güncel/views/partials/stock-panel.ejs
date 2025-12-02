@@ -1,0 +1,192 @@
+<div id="stock-management" class="panel-section">
+    <header class="top-bar">
+        <h1>Malzeme Takip ve Zimmet</h1>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-top: 20px;">
+        
+        <div class="card" style="padding:0; overflow:hidden; display:flex; flex-direction:column; height: 600px;">
+            <div class="card-header" style="padding:15px 20px; border-bottom:1px solid var(--border); background:rgba(255,255,255,0.02); display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="material-icons-round" style="color:var(--primary);">history_edu</span>
+                    <h3 style="font-size:1rem; margin:0;">Zimmet Geçmişi</h3>
+                </div>
+                <input type="text" placeholder="Kayıtlarda ara..." id="logSearch" onkeyup="searchLogTable()" 
+                       style="background:var(--bg-main); border:1px solid var(--border); padding:8px 15px; border-radius:20px; color:var(--text-main); font-size:0.85rem; width: 220px; outline:none;">
+            </div>
+            
+            <div style="overflow-y:auto; flex:1;">
+                <table class="operator-table" id="logTable">
+                    <thead>
+                        <tr>
+                            <th style="padding-left:20px;">Tarih</th>
+                            <th>Teslim Alan</th>
+                            <th>Verilen Ürün</th>
+                            <th>Adet</th>
+                            <% if(user.rol === 'admin') { %> <th style="text-align:center;">Sil</th> <% } %>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:20px;">
+            
+            <div class="card" style="border-top: 4px solid var(--success); padding: 20px;">
+                <h3 style="margin: 0 0 15px 0; font-size: 1.1rem; display: flex; align-items: center; gap: 10px;">
+                    <span class="material-icons-round" style="color:var(--success);">shopping_cart_checkout</span>
+                    Hızlı Çıkış Yap
+                </h3>
+                
+                <form action="/stock/add" method="POST">
+                    
+                    <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px;">
+                        <label style="font-size: 0.75rem; color: var(--text-sub); display: block; margin-bottom: 10px; font-weight:600; letter-spacing: 0.5px;">VERİLECEK MALZEME</label>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            
+                            <div class="dropdown-container" id="dd_type">
+                                <span class="material-icons-round input-icon">category</span>
+                                <div class="dropdown-trigger" onclick="toggleDropdown('dd_type')">
+                                    <span class="selected-text">1. Tür Seçin (Toner/Drum..)</span>
+                                    <span class="material-icons-round arrow-icon">expand_more</span>
+                                </div>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-option" onclick="selectOption('dd_type', 'Toner')">Toner</div>
+                                    <div class="dropdown-option" onclick="selectOption('dd_type', 'Drum')">Drum</div>
+                                    <div class="dropdown-option" onclick="selectOption('dd_type', 'Fuser')">Fuser</div>
+                                </div>
+                                <input type="hidden" name="tur_hidden" id="input_issue_type"> 
+                            </div>
+
+                            <div class="dropdown-container disabled" id="dd_brand">
+                                <span class="material-icons-round input-icon">branding_watermark</span>
+                                <div class="dropdown-trigger" onclick="toggleDropdown('dd_brand')">
+                                    <span class="selected-text">2. Marka Seçin</span>
+                                    <span class="material-icons-round arrow-icon">expand_more</span>
+                                </div>
+                                <div class="dropdown-menu" id="menu_brand_list">
+                                    </div>
+                                <input type="hidden" name="marka_hidden" id="input_issue_brand">
+                            </div>
+
+                            <div style="display:flex; gap:8px;">
+                                <div class="dropdown-container disabled" id="dd_model" style="flex:1;">
+                                    <span class="material-icons-round input-icon">qr_code_2</span>
+                                    <div class="dropdown-trigger" onclick="toggleDropdown('dd_model')">
+                                        <span class="selected-text">3. Model Seçin</span>
+                                        <span class="material-icons-round arrow-icon">expand_more</span>
+                                    </div>
+                                    <div class="dropdown-menu" id="menu_model_list">
+                                        </div>
+                                    <input type="hidden" name="model_select" id="input_stock_def_select">
+                                </div>
+
+                                <a href="#" onclick="openDefModal()" title="Listede Yoksa Yeni Ekle" 
+                                   style="display:flex; align-items:center; justify-content:center; width:48px; background:rgba(138, 180, 248, 0.1); border:1px solid rgba(138, 180, 248, 0.2); border-radius:8px; text-decoration:none; transition:0.2s;">
+                                    <span class="material-icons-round" style="color:var(--primary);">add</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 10px; margin-bottom: 15px;">
+                        
+                        <div class="dropdown-container" id="dd_title">
+                            <div class="dropdown-trigger" onclick="toggleDropdown('dd_title')" style="padding-left:12px;">
+                                <span class="selected-text">Seçiniz</span>
+                                <span class="material-icons-round arrow-icon">expand_more</span>
+                            </div>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-option" onclick="selectOption('dd_title', 'Hakim')">Hakim</div>
+                                <div class="dropdown-option" onclick="selectOption('dd_title', 'Kalem')">Kalem</div>
+                                <div class="dropdown-option" onclick="selectOption('dd_title', 'Ön Büro')">Ön Büro</div>
+                                <div class="dropdown-option" onclick="selectOption('dd_title', 'Birim Bşk.')">Birim Bşk.</div>
+                            </div>
+                            <input type="hidden" name="alici_unvan" id="input_alici_unvan" value="Hakim">
+                        </div>
+                        
+                        <div>
+                             <input type="text" name="alici_ad" required placeholder="Birim" class="styled-input">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 0.6fr 1fr; gap: 10px; margin-bottom: 20px;">
+                        <div>
+                            <input type="number" name="adet" value="1" min="1" required class="styled-input" style="text-align:center;">
+                        </div>
+                        <div>
+                            <input type="text" name="aciklama" placeholder="Not (Opsiyonel)" class="styled-input">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-action" style="width:100%; background: var(--success); color: white; justify-content: center; font-weight: 600; padding:12px; border-radius:8px; border:none; cursor:pointer;">
+                        <span class="material-icons-round" style="margin-right:8px;">check_circle</span>
+                        Teslim Et
+                    </button>
+                </form>
+            </div>
+
+            <div class="card" style="flex:1; padding:0; overflow:hidden; display:flex; flex-direction:column; opacity: 0.9;">
+                <div class="card-header" style="padding:12px 15px; border-bottom:1px solid var(--border); background:rgba(0,0,0,0.1);">
+                    <h4 style="margin:0; font-size:0.85rem; color:var(--text-sub);">Tanımlı Malzeme Listesi</h4>
+                </div>
+                <div style="overflow-y:auto; flex:1; max-height: 200px;">
+                    <table class="operator-table" style="font-size:0.8rem;" id="defTable">
+                        </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="defModal" class="modal-overlay">
+    <div class="modal-content dark-modal" style="max-width:400px;">
+        <div class="modal-header">
+            <h3>Yeni Ürün Tanımla</h3>
+            <button onclick="closeDefModal()" class="close-btn"><span class="material-icons-round">close</span></button>
+        </div>
+        
+        <div style="padding:15px; background:rgba(138, 180, 248, 0.1); border-radius:8px; color:var(--text-main); font-size:0.9rem; margin: 15px 0 20px 0; display:flex; gap:10px;">
+            <span class="material-icons-round" style="color:var(--primary);">info</span>
+            <div>Lütfen önce <b>Tür</b>, sonra <b>Marka</b> seçiniz.</div>
+        </div>
+
+        <form action="/stock/def/add" method="POST" onsubmit="combineBrandModel()">
+            
+            <div style="display:flex; flex-direction:column; gap:15px;">
+                <div style="position:relative;">
+                    <span class="material-icons-round input-icon" style="left:12px;">category</span>
+                    <select name="tur" id="def_type" required onchange="filterBrands('def')" class="styled-input" style="padding-left:40px; cursor:pointer;">
+                        <option value="" disabled selected>Tür Seçiniz</option>
+                        <option value="Toner">Toner</option>
+                        <option value="Drum">Drum</option>
+                        <option value="Fuser">Fuser</option>
+                    </select>
+                </div>
+
+                <div style="position:relative;">
+                    <span class="material-icons-round input-icon" style="left:12px;">branding_watermark</span>
+                    <select id="def_brand" required disabled class="styled-input" style="padding-left:40px; opacity:0.6; cursor:not-allowed;">
+                        <option value="" disabled selected>Önce Tür Seçiniz</option>
+                    </select>
+                </div>
+
+                <div style="position:relative;">
+                    <span class="material-icons-round input-icon" style="left:12px;">edit</span>
+                    <input type="text" id="def_model_input" required placeholder="Model Numarası (Örn: MX410)" class="styled-input" style="padding-left:40px;">
+                </div>
+            </div>
+            
+            <input type="hidden" name="ad" id="final_model_name">
+
+            <button type="submit" class="btn-action primary-btn" style="width:100%; margin-top:25px; justify-content:center;">
+                <span class="material-icons-round">save</span> Listeye Ekle
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="/js/stock-logic.js"></script>

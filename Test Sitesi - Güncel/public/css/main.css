@@ -1,0 +1,134 @@
+/* main.css - Dark Mode Genel Ayarlar */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+:root {
+    /* Google Dark Mode Renkleri */
+    --bg-color: #121212;         /* Arka plan (En koyu) */
+    --surface-color: #1e1f20;    /* Kartlar ve Kutular */
+    --primary-color: #8ab4f8;    /* Açık Mavi (Koyu modda daha iyi okunur) */
+    --primary-hover: #aecbfa;    /* Hover rengi */
+    --text-color: #e8eaed;       /* Ana metin (Beyazın biraz kırığı) */
+    --text-secondary: #9aa0a6;   /* İkincil metin (Gri) */
+    --border-color: #3c4043;     /* Çerçeveler */
+    --input-bg: #121212;         /* Input içi */
+    
+    /* Buton İçi Yazı Rengi (Açık mavi buton üstüne koyu yazı) */
+    --btn-text-color: #202124;   
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+/* Genel Form Elemanları */
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 1px var(--primary-color); /* Glow efekti yerine net çizgi */
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: var(--btn-text-color);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Scrollbar Tasarımı (Koyu Mod İçin) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #121212; 
+}
+::-webkit-scrollbar-thumb {
+    background: #3c4043; 
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #5f6368; 
+}
+
+.alert-error {
+    background-color: #3c1e1e; /* Koyu kırmızı zemin */
+    color: #f2b8b5; /* Açık kırmızı yazı */
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #e94235;
+}
+
+/* --- MATERIAL SNACKBAR / TOAST BİLDİRİMİ --- */
+.toast-notification {
+    position: fixed;
+    bottom: 30px; /* Ekranın altından mesafe */
+    left: 50%;
+    transform: translateX(-50%) translateY(100px); /* Başlangıçta aşağıda gizli */
+    
+    background-color: #323336; /* Koyu gri (Surface rengi) */
+    color: #e8eaed; /* Açık yazı rengi */
+    
+    min-width: 300px;
+    padding: 16px 24px;
+    border-radius: 8px; /* Hafif yuvarlak köşeler */
+    
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5); /* Derinlik gölgesi */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 10000;
+    
+    border-left: 4px solid #f28b82; /* Hata kırmızısı çizgi */
+    
+    /* Animasyon Geçişi */
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s ease;
+    opacity: 0;
+    pointer-events: none; /* Gizliyken tıklamayı engelle */
+}
+
+/* JavaScript ile 'show' sınıfı eklendiğinde görünür olur */
+.toast-notification.show {
+    transform: translateX(-50%) translateY(0); /* Yukarı kayar */
+    opacity: 1;
+    pointer-events: all;
+}
+
+.toast-icon {
+    color: #f28b82; /* İkon rengi (Hata kırmızısı) */
+    font-size: 24px;
+}
+
+.toast-message {
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
